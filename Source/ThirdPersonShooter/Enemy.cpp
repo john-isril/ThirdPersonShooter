@@ -424,11 +424,11 @@ void AEnemy::TurnLeft()
 	EnemyToPatrolLocation.Z = 0.0f;
 
 	FVector EnemyForward{ GetActorForwardVector() };
-	EnemyForward.Z = 0;
+	EnemyForward.Z = 0.0f;
 
 	FVector Turn{ FVector::CrossProduct(EnemyForward, EnemyToPatrolLocation)};
 	
-	if (Turn.Z < 0)
+	if (Turn.Z < 0.0f)
 	{
 		bShouldPlayLeftTurnAnimation = true;
 	}

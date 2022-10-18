@@ -94,7 +94,10 @@ private:
 	float RunningGroundFriction {2.0f};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Equip)
-	float CrouchingGroundFriction{ 100.0f };
+	float CrouchingGroundFriction{ 12.0f };
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = Equip)
+	float WalkingGroundFriction{ 12.0f };
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"), Category = Weapon)

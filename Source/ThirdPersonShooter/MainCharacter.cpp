@@ -266,7 +266,7 @@ void AMainCharacter::Sprint()
 	bIsSprinting = true;
 	bIsCrouching = false;
 
-	GetCharacterMovement()->GroundFriction = 2.0f;
+	GetCharacterMovement()->GroundFriction = RunningGroundFriction;
 }
 
 void AMainCharacter::StopSprint()
@@ -274,7 +274,7 @@ void AMainCharacter::StopSprint()
 	if (bIsPaused) return;
 
 	bIsSprinting = false;
-	GetCharacterMovement()->GroundFriction = 12.0f;
+	GetCharacterMovement()->GroundFriction = WalkingGroundFriction;
 }
 
 void AMainCharacter::UpdateSpeed()
@@ -415,7 +415,7 @@ void AMainCharacter::EquipWeapon(AWeapon* Weapon)
 
 void AMainCharacter::FireButtonPressed()
 {
-	if (bIsPaused) return;
+	if (bIsPaused || bMeleeAttackInProgress) return;
 
 	if (bIsInMeleeState)
 	{
@@ -993,8 +993,8 @@ void AMainCharacter::CrouchButtonPressed()
 
 	if (!GetCharacterMovement()->IsFalling())
 	{
-		bIsCrouching = !bIsCrouching;
-		GetCharacterMovement()->GroundFriction = bIsCrouching ? CrouchingGroundFriction : RunningGroundFriction;
+		bIsCrouching =  static_cast<bool>(1 - bIsCrouching);
+		GetCharacterMovement()->GroundFriction = bIsCrouching ? CrouchingGroundFriction : WalkingGroundFriction;
 	}
 }
 
@@ -1235,12 +1235,10 @@ void AMainCharacter::PlayStrangleMontage()
 void AMainCharacter::StrangleEnemy_Implementation()
 {
 	bStranglingInProgress = true;
-	bIsCrouching = false;
 	APlayerController* PlayerController{ UGameplayStatics::GetPlayerController(this, 0) };
 
 	if (PlayerController)
 	{
-		//DisableInput(PlayerController);
 		bUseControllerRotationYaw = false;
 	}
 	TargetStrangleSceneComponent->SetWorldTransform(StrangleVictim->GetTransform());
@@ -1250,8 +1248,8 @@ void AMainCharacter::StrangleEnemy_Implementation()
 
 void AMainCharacter::FinishStrangle()
 {
+	CrouchButtonPressed();
 	bStranglingInProgress = false;
-	bIsCrouching = true;
 	APlayerController* PlayerController{ UGameplayStatics::GetPlayerController(this, 0) };
 	if (PlayerController)
 	{
