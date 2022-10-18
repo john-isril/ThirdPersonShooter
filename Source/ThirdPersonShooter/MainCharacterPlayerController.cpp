@@ -92,10 +92,28 @@ void AMainCharacterPlayerController::HidePauseScreen_Implementation()
 			}
 		}
 
+		HideControlsScreen_Implementation();
 		AMainCharacter* Main{ Cast<AMainCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0)) };
 		Main->SetPlayerPaused(false);
 	}
 }
+
+void AMainCharacterPlayerController::DisplayControlsScreen_Implementation()
+{
+	if (ControlsScreen)
+	{
+		ControlsScreen->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void AMainCharacterPlayerController::HideControlsScreen_Implementation()
+{
+	if (ControlsScreen)
+	{
+		ControlsScreen->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
 
 void AMainCharacterPlayerController::TogglePauseScreen()
 {
@@ -132,6 +150,16 @@ void AMainCharacterPlayerController::BeginPlay()
 		{
 			PauseScreen->AddToViewport();
 			PauseScreen->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+
+	if (ControlsScreenClass) // check if weve chosen a blueprint class
+	{
+		ControlsScreen = CreateWidget<UUserWidget>(this, ControlsScreenClass); // create an instance of the BP Class
+		if (ControlsScreen)
+		{
+			ControlsScreen->AddToViewport();
+			ControlsScreen->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
 }

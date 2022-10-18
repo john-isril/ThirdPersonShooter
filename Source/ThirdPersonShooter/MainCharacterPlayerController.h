@@ -44,6 +44,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets, meta = (AllowPrivateAccess = "true")); // This allows us to choose/reference a blueprint class
 	UUserWidget* PauseScreen;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets, meta = (AllowPrivateAccess = "true")); // This allows us to choose/reference a blueprint class
+	TSubclassOf<UUserWidget> ControlsScreenClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widgets, meta = (AllowPrivateAccess = "true")); // This allows us to choose/reference a blueprint class
+	UUserWidget* ControlsScreen;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode, meta = (AllowPrivateAccess = "true")); // This allows us to choose/reference a blueprint class
 	float RestartLevelDelay{ 5.0f };
 
@@ -60,4 +66,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void HidePauseScreen();
 	void HidePauseScreen_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void DisplayControlsScreen();
+	void DisplayControlsScreen_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void HideControlsScreen();
+	void HideControlsScreen_Implementation();
 };
