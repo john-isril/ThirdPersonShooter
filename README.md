@@ -9,7 +9,7 @@
 
         Melee State-
             Primary attacks (punches): Left mouse button
-            Secondary attacks: Right mouse button
+            Secondary attacks (kicks): Right mouse button
             Stealth takedown: Left mouse button, but must be crouching and behind enemy
             Switch to weapon state: tab key
 
